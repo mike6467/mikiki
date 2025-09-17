@@ -1,0 +1,33 @@
+modules = ["python-3.12"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Pi Auto Forwarder"
+
+[[workflows.workflow]]
+name = "Pi Auto Forwarder"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd mainmain && uv run python main.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[deployment]
+deploymentTarget = "vm"
+run = ["bash", "-c", "cd mainmain && uv run python main.py"]
